@@ -1,0 +1,25 @@
+// Without promise
+
+$.ajax({
+    url: 'some/url.json',
+    success: function(response){
+        $.ajax({
+            url: 'some/url?' + response.someobject,
+            success: function(result){
+                $('div').html(result);
+            }
+        });
+    }
+});
+
+// We can simplify this using promise
+
+var myPromise = new Promise(function(resolve, reject){
+    resolve($.ajax(some/url.json)); // This refers to first ajax call
+});
+
+myPromise.then(function(response){
+    return new Promise()
+}).then(function(result){ // The inside ajax call is done here
+    $('div').html(result);
+});
